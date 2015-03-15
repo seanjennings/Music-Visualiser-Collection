@@ -18,6 +18,7 @@ public class Main extends PApplet {
 	
 	Minim minim;
 	AudioInput in;
+	Visualizer1 visualizer1 = new Visualizer1(this);
 	float min,max,avg,tot;
 	int sampleRate = 44100;
 	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
@@ -25,11 +26,14 @@ public class Main extends PApplet {
 	
 	public void setup() {
 		size(2048,500);
+		
 		minim = new Minim(this);
 		in = minim.getLineIn(Minim.MONO, width, sampleRate, 16);
 		
 		min = Float.MIN_VALUE;
 		max = Float.MAX_VALUE;
+		
+		
 	}
 	
 	public void draw() {
@@ -43,25 +47,11 @@ public class Main extends PApplet {
 			line(i,(height/2),i, (height/2)+sample);
 			tot += abs(in.left.get(i));
 		}
-		tot = tot / in.bufferSize();
-		tot-=0.02;
 		
-		float transp = tot;
-		//print(transp+"\n");
-		tot = tot * 300;
-		
-		noStroke();
-		
-		for(int i=1 ; i<4 ; i++) {
-			int size = (i == 2) ? 200 : 100 ;
-			
-			fill(0,0,255,255*(transp*3.0f));
-			ellipse(width*i/4,height/2,size+tot,size+tot);
-			fill(0);
-			ellipse(width*i/4,height/2,(size+tot)/2,(size+tot)/2);
-		}
+		visualizer1.animation(in.bufferSize(), tot);
 		
 		fill(255);
+		
 		int zeroCrossings = countZeroCrossings();
 		
 		if(zeroCrossings < 200)
@@ -71,8 +61,8 @@ public class Main extends PApplet {
 			text("Frequency: "+freq, 20, 40);
 			text("Note: "+spell(freq), 20, 60);
 		}
-		print(frequencies.length + "\n");
-		print(spellings.length + "\n");
+		//print(frequencies.length + "\n");
+		//print(spellings.length + "\n");
 	}
 	
 	public int countZeroCrossings() {

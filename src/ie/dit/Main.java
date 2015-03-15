@@ -1,178 +1,110 @@
 package ie.dit;
 
-import java.util.ArrayList;
-
 import processing.core.PApplet;
 import ddf.minim.AudioInput;
 import ddf.minim.Minim;
-import ddf.minim.analysis.FFT;
-import ddf.minim.analysis.WindowFunction;
+//ctrl shift o
 
-public class Main extends PApplet
-{
+public class Main extends PApplet {
+
+	/*public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String name = "Bryan";
+		
+		System.out.println("Hello " + name);
+		String name1 = "Bryan1";
+		System.out.println("Hello " + name1);
+	}*/
+	
 	Minim minim;
 	AudioInput in;
-	float min;
-	float max;
-	                         
-	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f
-			, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
-	//String[] spellings = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "D", "E", "F", "G", "A", "B","c", "d", "e", "f", "g", "a", "b", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "d''"}; 	
-	String[] spellings = {"D", "E", "F", "G", "A", "B", "C", "D", "E", "F", "G", "A", "B","C", "D", "E", "F", "G", "A", "B", "C", "D", "E", "F", "G", "A", "B", "C", "D"};
+	float min,max,avg,tot;
 	int sampleRate = 44100;
-	FFT fft;
+	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
+    String[] spellings = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "D", "E", "F", "G", "A", "B","c", "d", "e", "f", "g", "a", "b", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "d''"};
 	
-	
-	public void setup()
-	{
-		size(2048, 500, OPENGL);
-		smooth();
+	public void setup() {
+		size(2048,500);
 		minim = new Minim(this);
-		
 		in = minim.getLineIn(Minim.MONO, width, sampleRate, 16);
-		fft = new FFT(width, sampleRate);
-		min = Float.MAX_VALUE;
-		max = Float.MIN_VALUE;
-	}
-	
-	public String spell(float frequency)
-	{
-		float minDiff = Float.MAX_VALUE;
-		int minIndex = 0;
-		for (int i = 0 ; i < frequencies.length; i ++)
-		{
-			float diff = Math.abs(frequencies[i] - frequency);
-			if (diff < minDiff)
-			{
-				minDiff = diff;
-				minIndex = i;
-			}
-		}
-		return spellings[minIndex];
-	}
-	
-	public int countZeroCrossings()
-	{
-		int count = 0;
 		
-		for (int i = 1 ; i < in.bufferSize(); i ++)
-		{
-			if (in.left.get(i - 1) > 0 && in.left.get(i) <= 0)
-			{
-				count ++;
-			}
-		}		
-		return count;		
+		min = Float.MIN_VALUE;
+		max = Float.MAX_VALUE;
 	}
 	
-	public float FFTFreq()
-	{
-		float maxValue = Float.MIN_VALUE;
-		int maxIndex = -1;
-		for (int i = 0 ; i < fft.specSize() ; i ++)
-		{
-			if (fft.getBand(i) > maxValue)
-			{
-				maxValue = fft.getBand(i);
-				maxIndex = i;
-			}
-		}
-		return fft.indexToFreq(maxIndex);
-	}
-	
-	public void draw()
-	{
+	public void draw() {
 		background(0);
 		stroke(255);
-		float average = 0;
+		tot = 100;
 		
-		for (int i = 0 ; i < in.bufferSize(); i ++)
-		{
+		for(int i=0;i<in.bufferSize();i++) {
 			float sample = in.left.get(i);
-			
-			if (sample < min)
-			{
-				min = sample;
-			}
-			
-			if (sample > max)
-			{
-				max = sample;
-			}
-			sample *= 100.0;
-			line(i, height / 2, i,  (height / 2) + sample);
-			average += Math.abs(in.left.get(i));
-			//point(i, (height / 2) + sample);
+			sample *= 600;
+			line(i,(height/2),i, (height/2)+sample);
+			tot += abs(in.left.get(i));
 		}
-
+		tot = tot / in.bufferSize();
+		tot-=0.02;
 		
-		average /= in.bufferSize();
+		float transp = tot;
+		//print(transp+"\n");
+		tot = tot * 300;
 		
-		fft.window(FFT.HAMMING);
-		fft.forward(in.left);
-		stroke(0, 255, 255);
-		for (int i = 0 ; i < fft.specSize() ; i ++)
-		{
-			line(i, height, i, height - fft.getBand(i)*100);
+		noStroke();
+		
+		for(int i=1 ; i<4 ; i++) {
+			int size = (i == 2) ? 200 : 100 ;
+			
+			fill(0,0,255,255*(transp*3.0f));
+			ellipse(width*i/4,height/2,size+tot,size+tot);
+			fill(0);
+			ellipse(width*i/4,height/2,(size+tot)/2,(size+tot)/2);
 		}
 		
 		fill(255);
-		text("Amp: " + average, 10, 10);
-		int zeroC = countZeroCrossings();		
+		int zeroCrossings = countZeroCrossings();
 		
-		if (average > 0.001f)
+		if(zeroCrossings < 200)
 		{
-			float freqByZeroC = ((float) sampleRate / (float)in.bufferSize()) * (float) zeroC;
-			text("Zero crossings: " + zeroC, 10, 30);
-			text("Freq by zero crossings: " + freqByZeroC, 10, 50);
-			String zcSpell = spell(freqByZeroC);
-			text("Spelling by zero crossings: " + spell(freqByZeroC), 10, 70);
-			float freqByFFT = FFTFreq();
-			
-			String fftSpell = spell(freqByFFT);
-			text("Freq by FFT: " + freqByFFT, 10, 90);
-			text("Spelling by FFT: " + fftSpell, 10, 110);						
+			text("Zero Crossings: "+zeroCrossings, 20, 20);
+			float freq = (float) (zeroCrossings * (1 / 0.023)) / 2;
+			text("Frequency: "+freq, 20, 40);
+			text("Note: "+spell(freq), 20, 60);
 		}
-		float smallRadius = 50;
-		float bigRadius = (smallRadius * 2) + (average * 500);
-		
-		stroke(0, 255, 0);
-		fill(0, 255, 0);
-		ellipse(width / 2, height / 2, bigRadius, bigRadius);
-		stroke(0);
-		fill(0);
-		ellipse(width / 2, height / 2, smallRadius, smallRadius);		
+		print(frequencies.length + "\n");
+		print(spellings.length + "\n");
 	}
 	
-	/*
-	public void draw()
-	{
-		background(0);
-		stroke(255);
-		for (int i = 0 ; i < in.bufferSize(); i ++)
-		{
-			float sample = in.left.get(i);
-			if (sample < min)
-			{
-				min = sample;
-			}
-			
-			if (sample > max)
-			{
-				max = sample;
-			}
-			sample *= 100.0;
-			line(i, height / 2, i,  (height / 2) + sample);
-			//point(i, (height / 2) + sample);
-		}
+	public int countZeroCrossings() {
+		int count = 0;
+		float prev = 0;
 		
-		text("Max: " + max, 10, 10);
-		text("Min: " + min, 10, 30);		
+		for(int i=0;i<in.bufferSize();i++) {
+			
+			if((prev > 0 && in.left.get(i) < 0) || (prev < 0 && in.left.get(i) > 0)) {
+				count++;
+			}
+			prev = in.left.get(i);
+		}
+		return count/2;
 	}
-	*/
-
-	public static void main(String[] args)
-	{
+	
+	public String spell(float frequency) {
+		float min_dist = Float.MAX_VALUE;
+		int min_dist_index = 0;
+		
+		for(int i=0 ; i < frequencies.length ; i++) {
+			float temp = abs(frequency - frequencies[i]);
+			if(temp < min_dist) {
+				min_dist = temp;
+				min_dist_index = i;
+			}
+		}
+		return spellings[min_dist_index];
+	}
+	
+	public static void main(String args[][]) {
 		PApplet.main(new String[] {"--present", "ie.dit.Main"});
 	}
+
 }

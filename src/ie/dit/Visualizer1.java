@@ -14,16 +14,8 @@ public class Visualizer1
 		parent = p;
 	}
 	
-	void animation(int bufferSize, float tot) 
+	void animation(float tot, float transp) 
 	{	
-		tot = tot / bufferSize;
-		tot-=0.02;
-		
-		parent.print("BufferSize is " + bufferSize + "tot is " + tot + " ");
-		
-		float transp = tot;
-		//print(transp+"\n");
-		tot = tot * 300;
 		
 		parent.noStroke();
 		

@@ -19,6 +19,7 @@ public class Main extends PApplet {
 	Minim minim;
 	AudioInput in;
 	Visualizer1 visualizer1 = new Visualizer1(this);
+	Visualizer2 visualizer2 = new Visualizer2(this);
 	float min,max,avg,tot;
 	int sampleRate = 44100;
 	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
@@ -44,16 +45,28 @@ public class Main extends PApplet {
 		for(int i=0;i<in.bufferSize();i++) {
 			float sample = in.left.get(i);
 			sample *= 600;
-			line(i,(height/2),i, (height/2)+sample);
+			//line(i,(height/2),i, (height/2)+sample);
 			tot += abs(in.left.get(i));
 		}
 		
-		visualizer1.animation(in.bufferSize(), tot);
+		tot = tot / in.bufferSize();
+		tot-=0.02;
+		
+		print("BufferSize is " + in.bufferSize() + "tot is " + tot + " ");
+		
+		float transp = tot;
+		//print(transp+"\n");
+		tot = tot * 300;
+		
+		//visualizer1.animation(tot,transp);
+		smooth();
+		noStroke();
+		visualizer2.animation(tot);
 		
 		fill(255);
 		
 		int zeroCrossings = countZeroCrossings();
-		
+		/*
 		if(zeroCrossings < 200)
 		{
 			text("Zero Crossings: "+zeroCrossings, 20, 20);
@@ -61,6 +74,7 @@ public class Main extends PApplet {
 			text("Frequency: "+freq, 20, 40);
 			text("Note: "+spell(freq), 20, 60);
 		}
+		*/
 		//print(frequencies.length + "\n");
 		//print(spellings.length + "\n");
 	}

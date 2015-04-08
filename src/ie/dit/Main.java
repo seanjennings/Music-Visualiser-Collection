@@ -1,9 +1,12 @@
 package ie.dit;
 
 import processing.core.PApplet;
+//ctrl shift o
+import java.util.ArrayList;
 import ddf.minim.AudioInput;
 import ddf.minim.Minim;
-//ctrl shift o
+import ddf.minim.analysis.FFT;
+import ddf.minim.analysis.WindowFunction;
 
 public class Main extends PApplet {
 
@@ -18,24 +21,29 @@ public class Main extends PApplet {
 	
 	Minim minim;
 	AudioInput in;
-	Visualizer1 visualizer1 = new Visualizer1(this);
-	Visualizer2 visualizer2 = new Visualizer2(this);
+	Visualizer1 visualizer1;
+	Visualizer2 visualizer2;
+	Visualizer3 visualizer3;
 	float min,max,avg,tot;
 	int sampleRate = 44100;
 	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
     String[] spellings = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "D", "E", "F", "G", "A", "B","c", "d", "e", "f", "g", "a", "b", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "d''"};
     int currentVisualiser = 0;
+    FFT fft;
 	
 	public void setup() {
 		size(2048,500);
 		
 		minim = new Minim(this);
 		in = minim.getLineIn(Minim.MONO, width, sampleRate, 16);
+		fft = new FFT(width, sampleRate);
 		
 		min = Float.MIN_VALUE;
 		max = Float.MAX_VALUE;
 		
-		
+		visualizer1 = new Visualizer1(this);
+		visualizer2 = new Visualizer2(this);
+		visualizer3 = new Visualizer3(this, in, sampleRate);
 	}
 	
 	public void draw() {
@@ -76,9 +84,14 @@ public class Main extends PApplet {
 				visualizer2.animation(tot);
 				break;
 				
+			case 3:
+				visualizer3.animation();
+				break;
+				
 			default:
 				break;
 		}
+		
 		/*
 		visualizer1.animation(tot,transp);
 		smooth();
@@ -115,6 +128,10 @@ public class Main extends PApplet {
 				
 			case '2':
 				currentVisualiser = 2;
+				break;
+				
+			case '3':
+				currentVisualiser = 3;
 				break;
 		}
 	}

@@ -24,6 +24,7 @@ public class Main extends PApplet {
 	int sampleRate = 44100;
 	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
     String[] spellings = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "D", "E", "F", "G", "A", "B","c", "d", "e", "f", "g", "a", "b", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "d''"};
+    int currentVisualiser = 0;
 	
 	public void setup() {
 		size(2048,500);
@@ -52,18 +53,40 @@ public class Main extends PApplet {
 		tot = tot / in.bufferSize();
 		tot-=0.02;
 		
-		print("BufferSize is " + in.bufferSize() + "tot is " + tot + " ");
+		//print("BufferSize is " + in.bufferSize() + "tot is " + tot + " ");
 		
 		float transp = tot;
 		//print(transp+"\n");
 		tot = tot * 300;
 		
-		//visualizer1.animation(tot,transp);
+		smooth();
+		noStroke();
+		
+		print("Current Visualiser: "+currentVisualiser+"\n");
+		switch(currentVisualiser)
+		{
+			case 0:
+				break;
+				
+			case 1:
+				visualizer1.animation(tot,transp);
+				break;
+				
+			case 2:
+				visualizer2.animation(tot);
+				break;
+				
+			default:
+				break;
+		}
+		/*
+		visualizer1.animation(tot,transp);
 		smooth();
 		noStroke();
 		visualizer2.animation(tot);
+		*/
 		
-		fill(255);
+		//fill(255);
 		
 		int zeroCrossings = countZeroCrossings();
 		/*
@@ -77,6 +100,23 @@ public class Main extends PApplet {
 		*/
 		//print(frequencies.length + "\n");
 		//print(spellings.length + "\n");
+	}
+	
+	public void keyPressed() {
+		switch(key)
+		{
+			case '0':
+				currentVisualiser = 0;
+				break;
+				
+			case '1':
+				currentVisualiser = 1;
+				break;
+				
+			case '2':
+				currentVisualiser = 2;
+				break;
+		}
 	}
 	
 	public int countZeroCrossings() {

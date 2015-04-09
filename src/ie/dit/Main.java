@@ -1,12 +1,11 @@
 package ie.dit;
 
 import processing.core.PApplet;
-//ctrl shift o
-import java.util.ArrayList;
 import ddf.minim.AudioInput;
 import ddf.minim.Minim;
 import ddf.minim.analysis.FFT;
-import ddf.minim.analysis.WindowFunction;
+
+//ctrl shift o
 
 public class Main extends PApplet {
 
@@ -23,13 +22,16 @@ public class Main extends PApplet {
 	AudioInput in;
 	Visualizer1 visualizer1;
 	Visualizer2 visualizer2;
-	Visualizer3 visualizer3;
+	//Visualizer3 visualizer3;
+	Visualizer4 visualizer4;
+	int counter = 0;
 	float min,max,avg,tot;
 	int sampleRate = 44100;
 	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
     String[] spellings = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "D", "E", "F", "G", "A", "B","c", "d", "e", "f", "g", "a", "b", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "d''"};
     int currentVisualiser = 0;
     FFT fft;
+    float[] totalArrayLog;
 	
 	public void setup() {
 		size(2048,500);
@@ -43,19 +45,46 @@ public class Main extends PApplet {
 		
 		visualizer1 = new Visualizer1(this);
 		visualizer2 = new Visualizer2(this);
-		visualizer3 = new Visualizer3(this, in, sampleRate);
+		//visualizer3 = new Visualizer3(this, in, sampleRate);
+		visualizer4 = new Visualizer4(this);
+		
+		totalArrayLog = new float[18];
+		for (int i = 0; i < 18; i++)
+		{
+			totalArrayLog[i] = 0;
+		}
 	}
 	
 	public void draw() {
 		background(0);
 		stroke(255);
 		tot = 100;
+		max = 0;
 		
-		for(int i=0;i<in.bufferSize();i++) {
+		for(int i=0;i<in.bufferSize();i++) 
+		{
 			float sample = in.left.get(i);
+			//print("Sample before " + sample + "\n");
 			sample *= 600;
+			//print("Sample after " + sample + "\n");
 			//line(i,(height/2),i, (height/2)+sample);
 			tot += abs(in.left.get(i));
+			
+			if (i == 0 || sample > max)
+			{
+				max = sample;
+			}
+		}
+		
+		totalArrayLog[counter] = max;
+		
+		if (counter == 17)
+		{
+			counter = 0;
+		}
+		else
+		{
+			counter++;
 		}
 		
 		tot = tot / in.bufferSize();
@@ -70,7 +99,7 @@ public class Main extends PApplet {
 		smooth();
 		noStroke();
 		
-		print("Current Visualiser: "+currentVisualiser+"\n");
+		//print("Current Visualiser: "+currentVisualiser+"\n");
 		switch(currentVisualiser)
 		{
 			case 0:
@@ -85,7 +114,11 @@ public class Main extends PApplet {
 				break;
 				
 			case 3:
-				visualizer3.animation();
+				//visualizer3.animation();
+				break;
+				
+			case 4:
+				visualizer4.animation(totalArrayLog, transp);
 				break;
 				
 			default:
@@ -132,6 +165,9 @@ public class Main extends PApplet {
 				
 			case '3':
 				currentVisualiser = 3;
+				break;
+			case '4':
+				currentVisualiser = 4;
 				break;
 		}
 	}

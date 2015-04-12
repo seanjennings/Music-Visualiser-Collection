@@ -24,6 +24,7 @@ public class Main extends PApplet {
 	Visualizer2 visualizer2;
 	//Visualizer3 visualizer3;
 	Visualizer4 visualizer4;
+	Visualizer5 visualizer5;
 	int counter = 0;
 	float min,max,avg,tot;
 	int sampleRate = 44100;
@@ -47,6 +48,7 @@ public class Main extends PApplet {
 		visualizer2 = new Visualizer2(this);
 		//visualizer3 = new Visualizer3(this, in, sampleRate);
 		visualizer4 = new Visualizer4(this);
+		visualizer5 = new Visualizer5(this);
 		
 		totalArrayLog = new float[18];
 		for (int i = 0; i < 18; i++)
@@ -121,6 +123,10 @@ public class Main extends PApplet {
 				visualizer4.animation(totalArrayLog, transp);
 				break;
 				
+			case 5:
+				visualizer5.animation();
+				break;
+				
 			default:
 				break;
 		}
@@ -168,6 +174,9 @@ public class Main extends PApplet {
 				break;
 			case '4':
 				currentVisualiser = 4;
+				break;
+			case '5':
+				currentVisualiser = 5;
 				break;
 		}
 	}

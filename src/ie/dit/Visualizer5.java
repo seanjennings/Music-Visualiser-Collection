@@ -100,32 +100,32 @@ public class Visualizer5 {
 	    {
 	      float f = parent.random(0, 1000);
 	      
-	      if (tot > 15 && f > 995f)
+	      if (tot > 15 && f > 999f)
 	      {
 	        board[row][col] = true;
 	      }
 	      
-	      else if (tot > 20 && f > 994f)
+	      else if (tot > 20 && f > 996.7f)
 	      {
 	        board[row][col] = true;
 	      }
 	      	      
-	      else if (tot > 30 && f > 993f)
+	      else if (tot > 30 && f > 996.3f)
 	      {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 60 && f > 992f)
+	      else if (tot > 60 && f > 996f)
 	      {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 90 && f > 990f)
+	      else if (tot > 90 && f > 993f)
 	      {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 120 && f > 990f)
+	      else if (tot > 120 && f > 992f)
 	      {
 	    	  board[row][col] = true;
 	      }

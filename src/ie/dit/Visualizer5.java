@@ -23,7 +23,7 @@ public class Visualizer5 {
 	  boardCentY = boardHeight / 2;
 	  board = new boolean[boardHeight][boardWidth];
 	  updateBoard = new boolean[boardHeight][boardWidth];
-	  //randomise();
+	  randomise(0.0f);
 	  pause = false;
 	 
 	  board[88][57] = true;
@@ -96,16 +96,43 @@ public class Visualizer5 {
 	  return count;
 	}
 	
-	void randomise()
+	void randomise(float tot)
 	{
 	  for (int row = 0 ; row < boardHeight ; row ++)
 	  {
+		parent.println("tot is " + tot);
 	    for (int col = 0 ; col < boardWidth ; col ++)
 	    {
-	      float f = parent.random(0, 1);
-	      if (f > 0.5f)
+	      float f = parent.random(0, 1000);
+	      
+	      if (tot > 15 && f > 995f)
 	      {
 	        board[row][col] = true;
+	      }
+	      
+	      else if (tot > 20 && f > 994f)
+	      {
+	        board[row][col] = true;
+	      }
+	      	      
+	      else if (tot > 30 && f > 993f)
+	      {
+	    	  board[row][col] = true;
+	      }
+	      
+	      else if (tot > 60 && f > 0.992f)
+	      {
+	    	  board[row][col] = true;
+	      }
+	      
+	      else if (tot > 90 && f > 0.991f)
+	      {
+	    	  board[row][col] = true;
+	      }
+	      
+	      else if (tot > 120 && f > 0.990f)
+	      {
+	    	  board[row][col] = true;
 	      }
 	    }
 	  }
@@ -153,10 +180,10 @@ public class Visualizer5 {
 	  }
 	}
 
-	void animation()
+	void animation(float tot)
 	{
 	  parent.background(0, 0, 0);
-	  
+	  randomise(tot);
 	  if (pause == false)
 	  {
 	  
@@ -204,317 +231,6 @@ public class Visualizer5 {
 	       }
 	    }
 	  }
-	  }
-	}
-
-	void keyPressed()
-	{
-	  if (parent.key == '+')
-	  {
-	    fps++;
-	  }
-	  
-	  else if ((parent.key == '-') && (fps > 0))
-	  {
-	    fps--;
-	  }
-	  
-	  else if (parent.key == ' ')
-	  {   
-	    if (pause == false)
-	    {
-	      pause = true;
-	    }
-	    
-	    else
-	    {
-	      pause = false;
-	    }
-	  }
-	  
-	  else if (parent.key == 'c')
-	  {
-	    clrscr();
-	  }
-	  
-	  else if (parent.key == 'r')
-	  {
-	    randomise();
-	  }
-	  
-	  else if (parent.key == '0')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row + 1][col] = true;
-	           board[row + 1][col + 1] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  }
-
-	  else if (parent.key == '1')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row + 1][col - 1] = true;
-	           board[row + 1][col + 2] = true;
-	           board[row + 2][col] = true;
-	           board[row + 2][col + 1] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  }
-
-	  else if (parent.key == '2')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row + 1][col - 1] = true;
-	           board[row + 1][col + 2] = true;
-	           board[row + 2][col] = true;
-	           board[row + 2][col + 2] = true;
-	           board[row + 3][col + 1] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  }
-
-	  else if (parent.key == '3')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row + 1][col] = true;
-	           board[row + 1][col + 2] = true;
-	           board[row + 2][col + 1] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  }
-
-	  else if (parent.key == '4')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row][col + 2] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  } 
-
-	  else if (parent.key == '5')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row][col + 2] = true;
-	           board[row + 1][col - 1] = true;
-	           board[row + 1][col] = true;
-	           board[row + 1][col + 1] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  }   
-	  
-	  else if (parent.key == '6')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row + 1][col] = true;
-	           board[row + 1][col + 1] = true;
-	           board[row + 2][col + 2] = true;
-	           board[row + 2][col + 3] = true;
-	           board[row + 3][col + 2] = true;
-	           board[row + 3][col + 3] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  }  
-	  
-	   else if (parent.key == '7')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row][col - 1] = true;
-	           board[row][col - 2] = true;
-	           board[row - 1][col - 4] = true;
-	           board[row - 2][col - 4] = true;
-	           board[row - 3][col - 4] = true;
-	           board[row - 1][col + 1] = true;
-	           board[row - 2][col + 1] = true;
-	           board[row - 3][col + 1] = true;
-	           board[row - 5][col] = true;
-	           board[row - 5][col - 1] = true;
-	           board[row - 5][col - 2] = true;
-	           
-	           board[row][col + 6] = true;
-	           board[row][col + 5] = true;
-	           board[row][col + 4] = true;
-	           board[row - 1][col + 3] = true;
-	           board[row - 2][col + 3] = true;
-	           board[row - 3][col + 3] = true;
-	           board[row - 1][col + 8] = true;
-	           board[row - 2][col + 8] = true;
-	           board[row - 3][col + 8] = true;
-	           board[row - 5][col + 6] = true;
-	           board[row - 5][col + 5] = true;
-	           board[row - 5][col + 4] = true;
-	           
-	           board[row + 2][col] = true;
-	           board[row + 2][col - 1] = true;
-	           board[row + 2][col - 2] = true;
-	           board[row + 3][col - 4] = true;
-	           board[row + 4][col - 4] = true;
-	           board[row + 5][col - 4] = true;
-	           board[row + 3][col + 1] = true;
-	           board[row + 4][col + 1] = true;
-	           board[row + 5][col + 1] = true;
-	           board[row + 7][col] = true;
-	           board[row + 7][col - 1] = true;
-	           board[row + 7][col - 2] = true;
-	           
-	           board[row + 2][col + 6] = true;
-	           board[row + 2][col + 5] = true;
-	           board[row + 2][col + 4] = true;
-	           board[row + 3][col + 3] = true;
-	           board[row + 4][col + 3] = true;
-	           board[row + 5][col + 3] = true;
-	           board[row + 3][col + 8] = true;
-	           board[row + 4][col + 8] = true;
-	           board[row + 5][col + 8] = true;
-	           board[row + 7][col + 6] = true;
-	           board[row + 7][col + 5] = true;
-	           board[row + 7][col + 4] = true;
-	           
-	           done = true;
-	         }
-	      }
-	    }
-	  }
-
-	  else if (parent.key == '8')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row][col] = true;
-	           board[row + 1][col + 1] = true;
-	           board[row + 1][col + 2] = true;
-	           board[row + 2][col] = true;
-	           board[row + 2][col + 1] = true;
-	           
-	           done = true;
-	         }
-	      }
-	    }
-	  } 
-
-	  else if (parent.key == '9')
-	  {
-	    done = false;
-	    for (int row = 0 ; row < boardHeight ; row ++)
-	    {
-	      for (int col = 0 ; col < boardWidth ; col ++)
-	      {
-	        if ((boardCentX > col) && (boardCentX < (col + cellWidth)) && (boardCentY > row) && (boardCentY < row + (cellHeight)) && (done == false))
-	         {
-	           board[row -1][col + 1] = true;
-	           board[row - 1][col + 2] = true;
-	           board[row][col] = true;
-	           board[row][col + 1] = true;
-	           board[row][col + 2] = true;
-	           board[row][col + 3] = true;
-	           board[row + 1][col] = true;
-	           board[row + 1][col + 1] = true;
-	           board[row + 1][col + 3] = true;
-	           board[row + 1][col + 4] = true;
-	           board[row + 2][col + 2] = true;
-	           board[row + 2][col + 3] = true;
-	           done = true;
-	         }
-	      }
-	    }
-	  }    
-	}
-
-	void mouseDragged()
-	{
-	  for (int row = 0 ; row < boardHeight ; row ++)
-	  {
-	    for (int col = 0 ; col < boardWidth ; col ++)
-	    {
-	      int x = cellWidth * col;
-	      int y = cellHeight * row;
-	      if ((parent.mouseX > x) && (parent.mouseX < (x + cellWidth)) && (parent.mouseY > y) && (parent.mouseY < (y + cellHeight)))
-	      {
-	        board[row][col] = true;
-	      }
-	    }
 	  }
 	}
 

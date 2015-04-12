@@ -44,12 +44,6 @@ public class Main extends PApplet {
 		min = Float.MIN_VALUE;
 		max = Float.MAX_VALUE;
 		
-		visualizer1 = new Visualizer1(this);
-		visualizer2 = new Visualizer2(this);
-		//visualizer3 = new Visualizer3(this, in, sampleRate);
-		visualizer4 = new Visualizer4(this);
-		visualizer5 = new Visualizer5(this);
-		
 		totalArrayLog = new float[18];
 		for (int i = 0; i < 18; i++)
 		{
@@ -124,7 +118,7 @@ public class Main extends PApplet {
 				break;
 				
 			case 5:
-				visualizer5.animation();
+				visualizer5.animation(tot);
 				break;
 				
 			default:
@@ -162,20 +156,26 @@ public class Main extends PApplet {
 				break;
 				
 			case '1':
+				visualizer1 = new Visualizer1(this);
 				currentVisualiser = 1;
 				break;
 				
 			case '2':
+				visualizer2 = new Visualizer2(this);
 				currentVisualiser = 2;
 				break;
 				
 			case '3':
 				currentVisualiser = 3;
 				break;
+				
 			case '4':
+				visualizer4 = new Visualizer4(this);
 				currentVisualiser = 4;
 				break;
+				
 			case '5':
+				visualizer5 = new Visualizer5(this);
 				currentVisualiser = 5;
 				break;
 		}

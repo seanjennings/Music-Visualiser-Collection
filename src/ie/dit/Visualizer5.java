@@ -26,11 +26,6 @@ public class Visualizer5 {
 	  randomise(0.0f);
 	  pause = false;
 	 
-	  board[88][57] = true;
-	  board[88][58] = true;
-	  board[89][56] = true;
-	  board[89][57] = true;
-	  board[90][57] = true; 
 	}
 
 	boolean[][] board;
@@ -120,17 +115,17 @@ public class Visualizer5 {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 60 && f > 0.992f)
+	      else if (tot > 60 && f > 992f)
 	      {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 90 && f > 0.991f)
+	      else if (tot > 90 && f > 990f)
 	      {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 120 && f > 0.990f)
+	      else if (tot > 120 && f > 990f)
 	      {
 	    	  board[row][col] = true;
 	      }

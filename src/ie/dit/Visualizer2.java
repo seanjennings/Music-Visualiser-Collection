@@ -3,7 +3,6 @@ package ie.dit;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
-import processing.core.PVector;
 
 
 public class Visualizer2 extends PApplet

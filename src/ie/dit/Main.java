@@ -22,7 +22,11 @@ public class Main extends PApplet {
 	AudioInput in;
 	Visualizer1 visualizer1;
 	Visualizer2 visualizer2;
+<<<<<<< HEAD
 	Visualizer3 visualizer3;
+=======
+	//Visualizer3 visualizer3;
+>>>>>>> a6e715d74bf94b52a171b39d7ec469dc2d5bffd0
 	Visualizer4 visualizer4;
 	Visualizer5 visualizer5;
 	int counter = 0;
@@ -49,8 +53,11 @@ public class Main extends PApplet {
 		{
 			totalArrayLog[i] = 0;
 		}
+<<<<<<< HEAD
 		
 		visualizer3 = new Visualizer3(this, in, sampleRate);
+=======
+>>>>>>> a6e715d74bf94b52a171b39d7ec469dc2d5bffd0
 	}
 	
 	public void draw() {
@@ -112,7 +119,15 @@ public class Main extends PApplet {
 				break;
 				
 			case 3:
-				visualizer3.animation();
+				//visualizer3.animation();
+				break;
+				
+			case 4:
+				visualizer4.animation(totalArrayLog, transp);
+				break;
+				
+			case 5:
+				visualizer5.animation(tot);
 				break;
 				
 			case 4:

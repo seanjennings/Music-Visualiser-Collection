@@ -8,15 +8,6 @@ import ddf.minim.analysis.FFT;
 //ctrl shift o
 
 public class Main extends PApplet {
-
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String name = "Bryan";
-		
-		System.out.println("Hello " + name);
-		String name1 = "Bryan1";
-		System.out.println("Hello " + name1);
-	}*/
 	
 	Minim minim;
 	AudioInput in;
@@ -51,7 +42,11 @@ public class Main extends PApplet {
 			totalArrayLog[i] = 0;
 		}
 		
+		visualizer1 = new Visualizer1(this);
+		visualizer2 = new Visualizer2(this);
 		visualizer3 = new Visualizer3(this, in, sampleRate);
+		visualizer4 = new Visualizer4(this);
+		visualizer5 = new Visualizer5(this);
 	}
 	
 	public void draw() {
@@ -165,12 +160,10 @@ public class Main extends PApplet {
 				break;
 				
 			case '1':
-				visualizer1 = new Visualizer1(this);
 				currentVisualiser = 1;
 				break;
 				
 			case '2':
-				visualizer2 = new Visualizer2(this);
 				currentVisualiser = 2;
 				break;
 				
@@ -179,12 +172,10 @@ public class Main extends PApplet {
 				break;
 				
 			case '4':
-				visualizer4 = new Visualizer4(this);
 				currentVisualiser = 4;
 				break;
 				
 			case '5':
-				visualizer5 = new Visualizer5(this);
 				currentVisualiser = 5;
 				break;
 		}

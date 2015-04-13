@@ -75,7 +75,7 @@ public class Visualizer2 extends PApplet
 		{
 			// Display the circle
 			parent.fill(col, opacity);
-			parent.ellipse(x, y, w*(tot/50), w*(tot/50));
+			parent.ellipse(x, y, w*(tot/100), w*(tot/100));
 		}
 		 
 		void diminish()

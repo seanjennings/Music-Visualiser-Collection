@@ -23,7 +23,6 @@ public class Visualizer5 {
 	  boardCentY = boardHeight / 2;
 	  board = new boolean[boardHeight][boardWidth];
 	  updateBoard = new boolean[boardHeight][boardWidth];
-	  randomise(0.0f);
 	  pause = false;
 	 
 	}
@@ -91,16 +90,21 @@ public class Visualizer5 {
 	  return count;
 	}
 	
-	void randomise(float tot)
+	void refresh(float[] totArrayLog)
 	{
-	  for (int row = 0 ; row < boardHeight ; row ++)
+	  /*for (int row = 0 ; row < boardHeight ; row ++)
 	  {
 		parent.println("tot is " + tot);
 	    for (int col = 0 ; col < boardWidth ; col ++)
 	    {
 	      float f = parent.random(0, 1000);
 	      
-	      if (tot > 15 && f > 999f)
+	      if (tot < 15 && f > 994f)
+	      {
+	        board[row][col] = false;
+	      }
+	      
+	      else if (tot > 15 && f > 999f)
 	      {
 	        board[row][col] = true;
 	      }
@@ -115,22 +119,56 @@ public class Visualizer5 {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 60 && f > 996f)
+	      else if (tot > 60 && f > 994f)
 	      {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 90 && f > 993f)
+	      else if (tot > 90 && f > 992f)
 	      {
 	    	  board[row][col] = true;
 	      }
 	      
-	      else if (tot > 120 && f > 992f)
+	      else if (tot > 120 && f > 990f)
 	      {
 	    	  board[row][col] = true;
+	      }
+	      
+	      else if (tot > 140 && f > 500)
+	      {
+	    	  board[row][col] = true;
+	      
 	      }
 	    }
-	  }
+	  }*/
+	int counter = 0;
+	for (int row = 0 ; row < boardHeight ; row ++)
+	{
+		for (int col = 0 ; col < boardWidth ; col += 30)
+		{
+			if (counter > 17)
+			{
+				counter = 0;
+			}
+			
+			float f = parent.random(0, 1);
+			
+			if ((row * cellHeight) < totArrayLog[counter] && f > 0.96)
+			{
+				board[row][col] = true;
+				
+				if (col > 10 && col < boardWidth - 10)
+				{
+					board[row][col + 4] = true;
+					board[row][col + 8] = true;
+				}
+			}
+			
+			
+			counter++;
+		}
+	}
+	  
 	}
 
 	void update()
@@ -175,10 +213,10 @@ public class Visualizer5 {
 	  }
 	}
 
-	void animation(float tot)
+	void animation(float[] totalArrayLog, boolean doClearScrn)
 	{
 	  parent.background(0, 0, 0);
-	  randomise(tot);
+	  refresh(totalArrayLog);
 	  if (pause == false)
 	  {
 	  
@@ -227,8 +265,14 @@ public class Visualizer5 {
 	    }
 	  }
 	  }
+	  
+	  if (doClearScrn)
+	  {
+		  clrscr();
+	  }
 	}
 
+	
 	void clrscr()
 	{
 	  for (int row = 0 ; row < boardHeight ; row ++)

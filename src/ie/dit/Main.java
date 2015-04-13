@@ -26,6 +26,7 @@ public class Main extends PApplet {
 	Visualizer4 visualizer4;
 	Visualizer5 visualizer5;
 	int counter = 0;
+	int counter2 = 0;
 	float min,max,avg,tot;
 	int sampleRate = 44100;
 	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
@@ -35,7 +36,7 @@ public class Main extends PApplet {
     float[] totalArrayLog;
 	
 	public void setup() {
-		size(2048,500);
+		size(2048, 500);
 		
 		minim = new Minim(this);
 		in = minim.getLineIn(Minim.MONO, width, sampleRate, 16);
@@ -73,8 +74,8 @@ public class Main extends PApplet {
 				max = sample;
 			}
 		}
-		
-		totalArrayLog[counter] = max;
+		float average = (tot / in.bufferSize()) * 600;
+		totalArrayLog[counter] = average;
 		
 		if (counter == 17)
 		{
@@ -120,7 +121,13 @@ public class Main extends PApplet {
 				break;
 				
 			case 5:
-				visualizer5.animation(tot);
+				visualizer5.animation(totalArrayLog, false);
+				counter2++;
+				if (counter2 == 1000)
+				{
+					visualizer5.animation(totalArrayLog, true);
+					counter2 = 0;
+				}
 				break;
 				
 			default:

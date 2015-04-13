@@ -27,8 +27,7 @@ public class Visualizer4 extends PApplet
 			int max = (int)totalArrayLog[i];
 			for (int j = parent.height; j > (parent.height - max); j -= 30)
 			{
-				xValue = i * weight;
-					parent.print(max + "\n");			
+				xValue = i * weight;			
 				if (j > parent.height / 1.5)
 				{
 					parent.fill(0, 255, 0);

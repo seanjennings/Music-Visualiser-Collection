@@ -247,10 +247,28 @@ public class Main extends PApplet {
 				
 			case '5':
 				currentVisualiser = 5;
+				visualizer5 = new Visualizer5(this);
 				break;
 				
+<<<<<<< HEAD
 			case '6':
 				currentVisualiser = 6;
+=======
+			case ' ':
+			    if (wave!=null&&out!=null)
+			      wave.unpatch(out);
+			    break;
+			    
+			case 'a':
+				song = minim.loadFile("Do1.mp3");
+				song.play();
+				value = 0;
+				break;
+				
+			case 'w':
+				song = minim.loadFile("Do#1.mp3");
+				song.play();
+>>>>>>> origin/master
 				break;
 				
 				

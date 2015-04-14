@@ -161,8 +161,13 @@ public class Visualizer5 {
 				{
 					board[row][col + 4] = true;
 					board[row][col + 8] = true;
+					parent.fill(0, 255, 0);
+					parent.line((col * cellWidth), totArrayLog[counter] + 15, ((col + 8) * cellWidth), totArrayLog[counter] + 15);
 				}
+				
 			}
+			parent.stroke(0, 255, 0);
+			
 			
 			
 			counter++;

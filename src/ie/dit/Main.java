@@ -482,6 +482,11 @@ public class Main extends PApplet {
 			    // patch the Oscil to the output
 			    wave.patch( out );
 			    break;
+			    
+			case ' ':
+				 if (wave!=null&&out!=null)
+				 wave.unpatch(out);
+				 break;
 				
 		}
 	}

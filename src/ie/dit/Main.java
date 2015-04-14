@@ -56,8 +56,8 @@ public class Main extends PApplet {
 		out = minim.getLineOut();
 		fft = new FFT(width, sampleRate);
 		
-		font = createFont("ds-digital.ttf",200);
-		textFont(font);
+		//font = createFont("ds-digital.ttf",200);
+		//textFont(font);
 		
 		line1 = (height / 2);
 		min = Float.MIN_VALUE;

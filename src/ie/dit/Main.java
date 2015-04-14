@@ -70,9 +70,6 @@ public class Main extends PApplet {
 		tot = 100;
 		max = 0;
 		
-		println(dataPath(""));
-		// draw the waveforms
-		
 		for(int i=0;i<in.bufferSize();i++) 
 		{
 			float sample = in.left.get(i);
@@ -200,6 +197,7 @@ public class Main extends PApplet {
 				
 			case '5':
 				currentVisualiser = 5;
+				visualizer5 = new Visualizer5(this);
 				break;
 				
 			case ' ':
@@ -208,7 +206,7 @@ public class Main extends PApplet {
 			    break;
 			    
 			case 'a':
-				song = minim.loadFile(dataPath("Do1.mp3"));
+				song = minim.loadFile("Do1.mp3");
 				song.play();
 				value = 0;
 				break;

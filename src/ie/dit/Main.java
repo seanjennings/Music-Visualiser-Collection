@@ -1,53 +1,42 @@
 package ie.dit;
 
 import processing.core.PApplet;
-import ddf.minim.AudioInput;
-import ddf.minim.AudioOutput;
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
+import ddf.minim.*;
 import ddf.minim.analysis.FFT;
-import ddf.minim.ugens.Oscil;
-import ddf.minim.ugens.Waves;
+
 
 //ctrl shift o
 
 public class Main extends PApplet {
 	
 	Minim minim;
-	Oscil wave;
 	AudioInput in;
-	AudioOutput out;
 	Visualizer1 visualizer1;
 	Visualizer2 visualizer2;
 	Visualizer3 visualizer3;
 	Visualizer4 visualizer4;
 	Visualizer5 visualizer5;
-	AudioPlayer song;
-	int spazio = 50;
-	int value;
+	Visualizer6 visualizer6;
+	Visualizer7 visualizer7;
+	//Visualizer8 visualizer8;
 	int counter = 0;
 	int counter2 = 0;
-	float min,max,avg,tot;
+	float min,max,avg,tot, speaker;
+	float x,y,z = 1;
 	int sampleRate = 44100;
 	float[] frequencies = {293.66f, 329.63f, 369.99f, 392.00f, 440.00f, 493.88f, 554.37f, 587.33f, 659.25f, 739.99f, 783.99f, 880.00f, 987.77f, 1108.73f, 1174.66f};
     String[] spellings = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "D", "E", "F", "G", "A", "B","c", "d", "e", "f", "g", "a", "b", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "d''"};
     int currentVisualiser = 0;
-    int line1;
     FFT fft;
     float[] totalArrayLog;
 	
 	public void setup() {
-		size(2048, 500);
+		size(2048, 500, P3D);
 		
 		minim = new Minim(this);
 		in = minim.getLineIn(Minim.MONO, width, sampleRate, 16);
-		
-		// use the getLineOut method of the Minim object to get an AudioOutput object
-		out = minim.getLineOut();
-		  
 		fft = new FFT(width, sampleRate);
 		
-		line1 = (height / 2);
 		min = Float.MIN_VALUE;
 		max = Float.MAX_VALUE;
 		
@@ -62,6 +51,11 @@ public class Main extends PApplet {
 		visualizer3 = new Visualizer3(this, in, sampleRate);
 		visualizer4 = new Visualizer4(this);
 		visualizer5 = new Visualizer5(this);
+		visualizer6 = new Visualizer6(this);
+		visualizer7 = new Visualizer7(this);
+		//visualizer8 = new Visualizer8(this);
+		
+
 	}
 	
 	public void draw() {
@@ -69,9 +63,6 @@ public class Main extends PApplet {
 		stroke(255);
 		tot = 100;
 		max = 0;
-		
-		println(dataPath(""));
-		// draw the waveforms
 		
 		for(int i=0;i<in.bufferSize();i++) 
 		{
@@ -86,6 +77,9 @@ public class Main extends PApplet {
 			{
 				max = sample;
 			}
+			
+			speaker = sample/10;
+			
 		}
 		float average = (tot / in.bufferSize()) * 600;
 		totalArrayLog[counter] = average;
@@ -115,11 +109,6 @@ public class Main extends PApplet {
 		switch(currentVisualiser)
 		{
 			case 0:
-				stroke(0, 255, 0);
-				for (int i = 0; i < in.bufferSize() - 1; i++)
-				{
-				    line( i, line1 + in.left.get(i)*50, i+1, line1 + in.left.get(i+1)*50 );
-				}
 				break;
 				
 			case 1:
@@ -147,9 +136,67 @@ public class Main extends PApplet {
 					counter2 = 0;
 				}
 				break;
-			default: 
 				
-			break;
+			case 6:
+				visualizer6.animation(speaker);
+				break;
+				
+			case 7:
+				visualizer7.animation(speaker);
+				break;
+			
+			case 8:
+				//visualizer8.animation(speaker,x,y,z);fill(0);
+				
+				
+				noFill();
+				stroke(255);
+				pushMatrix();
+				translate(width/2,height/2,0);
+				rotateX(x);
+			    rotateY(y);
+			    rotateZ(z);
+			    sphereDetail((int)speaker*10);
+			    sphere(100+speaker);
+			    x += (float) .01;
+			    y += (float) .01;
+			    z += (float) .01;
+			    popMatrix();
+			    
+			    noFill();
+				stroke(255);
+				pushMatrix();
+				int ran = (int) random(0,5);
+				translate(width/4,height/2,0);
+				rotateX(x);
+			    rotateY(y);
+			    rotateZ(z);
+			    sphereDetail((int)speaker*ran);
+			    sphere(50+speaker);
+			    x += (float) .01;
+			    y += (float) .01;
+			    z += (float) .01;
+			    popMatrix();
+				
+			    
+			    noFill();
+				stroke(255);
+				pushMatrix();
+				translate((width/2+ width/4),height/2,0);
+				rotateX(x);
+			    rotateY(y);
+			    rotateZ(z);
+			    sphereDetail((int)speaker*ran);
+			    sphere(50+speaker);
+			    x += (float) .01;
+			    y += (float) .01;
+			    z += (float) .01;
+			    popMatrix();
+			    
+				break;
+				
+			default:
+				break;
 		}
 		
 		/*
@@ -202,177 +249,21 @@ public class Main extends PApplet {
 				currentVisualiser = 5;
 				break;
 				
-			case ' ':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    break;
-			    
-			case 'a':
-				song = minim.loadFile(dataPath("Do1.mp3"));
-				song.play();
-				value = 0;
+			case '6':
+				currentVisualiser = 6;
 				break;
 				
-			case 'w':
-				song = minim.loadFile("Do#1.mp3");
-				song.play();
-				break;
 				
-			case 's':
-				song = minim.loadFile("Re1.mp3");
-				song.play();
-				value = 1;
-				break;
-				
-			case 'e':
-				song = minim.loadFile("Re#1.mp3");
-				song.play();
-				break;
-				
-			case 'd':
-				song = minim.loadFile("Mi1.mp3");
-				song.play();
-				value = 2;
+			case '7':
+				currentVisualiser = 7;
 				break;
 			
-			case 'f':
-				song = minim.loadFile("Fa1.mp3");
-				song.play();
-				value = 3;
+			case '8':
+				currentVisualiser = 8;
 				break;
 				
-			case 't':
-				song = minim.loadFile("Fa#1.mp3");
-				song.play();
 				break;
 				
-			case 'g':
-				song = minim.loadFile("Sol1.mp3");
-				song.play();
-			    value = 4;
-				break;
-				
-			case 'y':
-				song = minim.loadFile("Sol#1.mp3");
-				song.play();
-				break;
-				
-			case 'h':
-				song = minim.loadFile("La1.mp3");
-				song.play();
-				value = 5;
-				break;
-				
-			case 'u':
-				song = minim.loadFile("La#1.mp3");
-				song.play();
-				break;
-				
-			case 'j':
-				song = minim.loadFile("Si1.mp3");
-				song.play();
-			    value = 6;
-				break;
-				
-			case 'k':
-				song = minim.loadFile("Do2.mp3");
-				song.play();
-				value = 7;
-				break;
-				
-			case 'l':
-				
-				break;
-			    
-			case 'z':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 440, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			 
-			    break;
-			case 'x':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 880, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			    
-			case 'c':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 1320, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			    
-			case 'v':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 1860, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			    
-			case 'b':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 2300, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			    
-			case 'n':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 2740, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			    
-			case 'm':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 3180, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			    
-			case ',':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 3620, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			
-			case '.':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 4060, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;    
 		}
 	}
 	
@@ -409,3 +300,4 @@ public class Main extends PApplet {
 	}
 
 }
+

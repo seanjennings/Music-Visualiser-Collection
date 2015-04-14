@@ -92,10 +92,7 @@ public class Main extends PApplet {
 		for(int i=0;i<in.bufferSize();i++) 
 		{
 			float sample = in.left.get(i);
-			//print("Sample before " + sample + "\n");
 			sample *= 600;
-			//print("Sample after " + sample + "\n");
-			//line(i,(height/2),i, (height/2)+sample);
 			tot += abs(in.left.get(i));
 			
 			if (i == 0 || sample > max)
@@ -244,27 +241,7 @@ public class Main extends PApplet {
 				break;
 		}
 		
-		/*
-		visualizer1.animation(tot,transp);
-		smooth();
-		noStroke();
-		visualizer2.animation(tot);
-		*/
-		
-		//fill(255);
-		
 		int zeroCrossings = countZeroCrossings();
-		/*
-		if(zeroCrossings < 200)
-		{
-			text("Zero Crossings: "+zeroCrossings, 20, 20);
-			float freq = (float) (zeroCrossings * (1 / 0.023)) / 2;
-			text("Frequency: "+freq, 20, 40);
-			text("Note: "+spell(freq), 20, 60);
-		}
-		*/
-		//print(frequencies.length + "\n");
-		//print(spellings.length + "\n");
 	}
 	
 	float c;

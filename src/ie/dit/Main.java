@@ -408,7 +408,7 @@ public class Main extends PApplet {
 			      wave.unpatch(out);
 			    //wave.unpatch(out);
 			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 880, 0.1f, Waves.SINE );
+			    wave = new Oscil( 494, 0.1f, Waves.SINE );
 			    // patch the Oscil to the output
 			    wave.patch( out );
 			    break;
@@ -418,7 +418,7 @@ public class Main extends PApplet {
 			      wave.unpatch(out);
 			    //wave.unpatch(out);
 			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 1320, 0.1f, Waves.SINE );
+			    wave = new Oscil( 523, 0.1f, Waves.SINE );
 			    // patch the Oscil to the output
 			    wave.patch( out );
 			    break;
@@ -428,7 +428,7 @@ public class Main extends PApplet {
 			      wave.unpatch(out);
 			    //wave.unpatch(out);
 			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 1860, 0.1f, Waves.SINE );
+			    wave = new Oscil( 587, 0.1f, Waves.SINE );
 			    // patch the Oscil to the output
 			    wave.patch( out );
 			    break;
@@ -438,7 +438,7 @@ public class Main extends PApplet {
 			      wave.unpatch(out);
 			    //wave.unpatch(out);
 			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 2300, 0.1f, Waves.SINE );
+			    wave = new Oscil( 659, 0.1f, Waves.SINE );
 			    // patch the Oscil to the output
 			    wave.patch( out );
 			    break;
@@ -448,7 +448,7 @@ public class Main extends PApplet {
 			      wave.unpatch(out);
 			    //wave.unpatch(out);
 			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 2740, 0.1f, Waves.SINE );
+			    wave = new Oscil( 698, 0.1f, Waves.SINE );
 			    // patch the Oscil to the output
 			    wave.patch( out );
 			    break;
@@ -458,27 +458,7 @@ public class Main extends PApplet {
 			      wave.unpatch(out);
 			    //wave.unpatch(out);
 			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 3180, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			    
-			case ',':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 3620, 0.1f, Waves.SINE );
-			    // patch the Oscil to the output
-			    wave.patch( out );
-			    break;
-			
-			case '.':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    //wave.unpatch(out);
-			    // create a sine wave Oscil, set to 440 Hz, at 0.5 amplitude
-			    wave = new Oscil( 4060, 0.1f, Waves.SINE );
+			    wave = new Oscil( 784, 0.1f, Waves.SINE );
 			    // patch the Oscil to the output
 			    wave.patch( out );
 			    break;

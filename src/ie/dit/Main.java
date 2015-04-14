@@ -1,7 +1,7 @@
 package ie.dit;
 
 import processing.core.PApplet;
-import processing.core.PApplet;
+import processing.core.PFont;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioOutput;
 import ddf.minim.AudioPlayer;
@@ -44,6 +44,7 @@ public class Main extends PApplet {
     int line1;
     FFT fft;
     float[] totalArrayLog;
+    PFont font;
 	
 	public void setup() {
 		size(2048, 500, P3D);
@@ -54,6 +55,9 @@ public class Main extends PApplet {
 		// use the getLineOut method of the Minim object to get an AudioOutput object
 		out = minim.getLineOut();
 		fft = new FFT(width, sampleRate);
+		
+		font = createFont("ds-digital.ttf",200);
+		textFont(font);
 		
 		line1 = (height / 2);
 		min = Float.MIN_VALUE;
@@ -127,14 +131,18 @@ public class Main extends PApplet {
 		noStroke();
 		
 		//print("Current Visualiser: "+currentVisualiser+"\n");
+		if(currentVisualiser != 0) {
+			colorMode(RGB);
+		}
 		switch(currentVisualiser)
 		{
 			case 0:
-				stroke(0, 255, 0);
+				stroke(c,255,255);
 				for (int i = 0; i < in.bufferSize() - 1; i++)
 				{
 				    line( i, line1 + in.left.get(i)*50, i+1, line1 + in.left.get(i+1)*50 );
 				}
+				splash();
 				break;
 				
 			case 1:
@@ -257,6 +265,35 @@ public class Main extends PApplet {
 		*/
 		//print(frequencies.length + "\n");
 		//print(spellings.length + "\n");
+	}
+	
+	float c;
+	boolean increaseSize = false;
+	float textSize = 200;
+	
+	public void splash() {
+		textAlign(CENTER);
+		colorMode(HSB);
+		if (c >= 255)  c=0;  else  c+=3;
+		  fill(c, 255, 255);
+		if(textSize == 200) {
+			increaseSize=false;
+		}
+		else if(textSize == 180) {
+			increaseSize=true;
+		}
+		
+		if(increaseSize) {
+			textSize++;
+		}
+		else {
+			textSize--;
+		}
+		
+		textSize(textSize);
+		System.out.println(textSize);
+
+	    text("MUSIC \nVISUALIZER", width/2, 200);
 	}
 	
 	public void keyPressed() {

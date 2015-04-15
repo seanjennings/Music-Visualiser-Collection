@@ -177,9 +177,9 @@ public class Main extends PApplet {
 			
 			case 8:
 				visualizer8.animation(speaker,x,y,z);
-				
-				
 
+				/* For some reason the rotation does not seem to work in classes 8 and 9 but in 6,
+				though by adding the rotation again it works but slightly slower*/
 				pushMatrix();
 				rotateX(x);
 			    rotateY(y);
@@ -193,6 +193,7 @@ public class Main extends PApplet {
 			case 9:
 				visualizer9.animation(vol,x,y,z);
 				
+				//This is to allow the rotation of the planets rings to work.
 				pushMatrix();
 				rotateX(x);
 				rotateY(y);

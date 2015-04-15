@@ -27,14 +27,15 @@ public class Main extends PApplet {
 	Visualizer5 visualizer5;
 	Visualizer6 visualizer6;
 	Visualizer7 visualizer7;
-	//Visualizer8 visualizer8;
+	Visualizer8 visualizer8;
 	Visualizer9 visualizer9;
+	Visualizer10 visualizer10;
 	AudioPlayer song;
 	int spazio = 50;
 	int value;
 	int counter = 0;
 	int counter2 = 0;
-	float min,max,avg,tot, speaker;
+	float min,max,avg,tot, speaker, vol;
 	int threed;
 	float x,y,z = 1;
 	int sampleRate = 44100;
@@ -45,6 +46,10 @@ public class Main extends PApplet {
     FFT fft;
     float[] totalArrayLog;
     PFont font;
+    float ballX = width/2;
+	float bally = height/2;
+	float speed = speaker;
+	float ballSize = 20; //+ random(0,30);
 	
 	public void setup() {
 		size(2048, 500, P3D);
@@ -76,8 +81,9 @@ public class Main extends PApplet {
 		visualizer5 = new Visualizer5(this);
 		visualizer6 = new Visualizer6(this);
 		visualizer7 = new Visualizer7(this);
-		//visualizer8 = new Visualizer8(this);
+		visualizer8 = new Visualizer8(this);
 		visualizer9 = new Visualizer9(this);
+		visualizer10 = new Visualizer10(this);
 	}
 	
 	public void draw() {
@@ -101,6 +107,7 @@ public class Main extends PApplet {
 			}
 			
 			speaker = sample/10;
+			vol = speaker * 5;
 			
 		}
 		float average = (tot / in.bufferSize()) * 600;
@@ -177,63 +184,52 @@ public class Main extends PApplet {
 				break;
 			
 			case 8:
-				//visualizer8.animation(speaker,x,y,z);fill(0);
+				visualizer8.animation(speaker,x,y,z);
 				
 				
-				noFill();
-				stroke(255);
+
 				pushMatrix();
-				translate(width/2,height/2,0);
 				rotateX(x);
 			    rotateY(y);
 			    rotateZ(z);
-			    sphereDetail((int)speaker*10);
-			    sphere(100+speaker);
 			    x += (float) .01;
 			    y += (float) .01;
 			    z += (float) .01;
 			    popMatrix();
-			    
-			    noFill();
-				stroke(255);
-				pushMatrix();
-				int ran = (int) random(0,5);
-				translate(width/4,height/2,0);
-				rotateX(x);
-			    rotateY(y);
-			    rotateZ(z);
-			    sphereDetail((int)speaker*ran);
-			    sphere(50+speaker);
-			    x += (float) .01;
-			    y += (float) .01;
-			    z += (float) .01;
-			    popMatrix();
-				
-			    
-			    noFill();
-				stroke(255);
-				pushMatrix();
-				translate((width/2+ width/4),height/2,0);
-				rotateX(x);
-			    rotateY(y);
-			    rotateZ(z);
-			    sphereDetail((int)speaker*ran);
-			    sphere(50+speaker);
-			    x += (float) .01;
-			    y += (float) .01;
-			    z += (float) .01;
-			    popMatrix();
-			    
 				break;
 				
 			case 9:
-				visualizer9.animation(speaker);
+				visualizer9.animation(vol,x,y,z);
+				
+				pushMatrix();
+				rotateX(x);
+				rotateY(y);
+				x += (float) .01;
+				y += (float) .01;
+				popMatrix();
+				
 				break;
 				
-			case ' ':
-			    if (wave!=null&&out!=null)
-			      wave.unpatch(out);
-			    break;
+				
+			case 10:
+				//visualizer10.animation(speaker,x,y,z);
+				
+				
+				pushMatrix();
+				translate(ballX,bally);
+				ellipse(0,0,ballSize,ballSize);
+				popMatrix();
+				
+				pushMatrix();
+				translate(width/2,height/2,0);
+				noFill();
+			    stroke(255);
+			    box(300);
+			    
+			    popMatrix();
+			    
+			    
+				break;
 			    
 			
 				
@@ -314,6 +310,10 @@ public class Main extends PApplet {
 				
 			case '9':
 				currentVisualiser = 9;
+				break;
+				
+			case '-':
+				currentVisualiser = 10;
 				break;
 				
 			case 'a':

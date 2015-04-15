@@ -17,17 +17,47 @@ public class Visualizer8
 	
 	void animation(float speaker, float x, float y, float z) 
 	{	
-		int s = (int) speaker;
+		//int s = (int) speaker;
 		
-		parent.fill(0);
+		parent.noFill();
 		parent.stroke(255);
 		parent.pushMatrix();
 		parent.translate(parent.width/2,parent.height/2,0);
 		parent.rotateX(x);
+		parent.rotateY(y);
+		parent.rotateZ(z);
+		parent.sphereDetail((int)speaker*6);
+		parent.sphere(100+speaker);
+		x += (float) .01;
+		y += (float) .01;
+		z += (float) .01;
+		parent.popMatrix();
+	    
+		parent.noFill();
+		parent.stroke(255);
+		parent.pushMatrix();
+		int ran = (int) parent.random(0,5);
+		parent.translate(parent.width/4,parent.height/2,0);
+		parent.rotateX(x);
+		parent.rotateY(y);
+		parent.rotateZ(z);
+		parent.sphereDetail((int)speaker*ran);
+		parent.sphere(50+speaker);
+	    x += (float) .01;
+	    y += (float) .01;
+	    z += (float) .01;
+	    parent.popMatrix();
+		
+	    
+	    parent.noFill();
+	    parent.stroke(255);
+	    parent.pushMatrix();
+	    parent.translate((parent.width/2+ parent.width/4),parent.height/2,0);
+	    parent.rotateX(x);
 	    parent.rotateY(y);
 	    parent.rotateZ(z);
-	    //parent.curveDetail((int) speaker);
-	    parent.sphere(70+speaker);
+	    parent.sphereDetail((int)speaker*ran);
+	    parent.sphere(50+speaker);
 	    x += (float) .01;
 	    y += (float) .01;
 	    z += (float) .01;

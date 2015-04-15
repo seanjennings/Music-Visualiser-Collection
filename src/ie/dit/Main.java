@@ -10,8 +10,6 @@ import ddf.minim.analysis.FFT;
 import ddf.minim.ugens.Oscil;
 import ddf.minim.ugens.Waves;
 
-
-
 //ctrl shift o
 
 public class Main extends PApplet {
@@ -29,7 +27,6 @@ public class Main extends PApplet {
 	Visualizer7 visualizer7;
 	Visualizer8 visualizer8;
 	Visualizer9 visualizer9;
-	Visualizer10 visualizer10;
 	AudioPlayer song;
 	int spazio = 50;
 	int value;
@@ -46,10 +43,6 @@ public class Main extends PApplet {
     FFT fft;
     float[] totalArrayLog;
     PFont font;
-    float ballX = width/2;
-	float bally = height/2;
-	float speed = speaker;
-	float ballSize = 20; //+ random(0,30);
 	
 	public void setup() {
 		size(2048, 500, P3D);
@@ -83,7 +76,6 @@ public class Main extends PApplet {
 		visualizer7 = new Visualizer7(this);
 		visualizer8 = new Visualizer8(this);
 		visualizer9 = new Visualizer9(this);
-		visualizer10 = new Visualizer10(this);
 	}
 	
 	public void draw() {
@@ -107,9 +99,9 @@ public class Main extends PApplet {
 			}
 			
 			speaker = sample/10;
-			vol = speaker * 5;
-			
+			vol = speaker * 5;	
 		}
+		
 		float average = (tot / in.bufferSize()) * 600;
 		totalArrayLog[counter] = average;
 		
@@ -210,29 +202,6 @@ public class Main extends PApplet {
 				
 				break;
 				
-				
-			case 10:
-				//visualizer10.animation(speaker,x,y,z);
-				
-				
-				pushMatrix();
-				translate(ballX,bally);
-				ellipse(0,0,ballSize,ballSize);
-				popMatrix();
-				
-				pushMatrix();
-				translate(width/2,height/2,0);
-				noFill();
-			    stroke(255);
-			    box(300);
-			    
-			    popMatrix();
-			    
-			    
-				break;
-			    
-			
-				
 			default:
 				break;
 		}
@@ -310,10 +279,6 @@ public class Main extends PApplet {
 				
 			case '9':
 				currentVisualiser = 9;
-				break;
-				
-			case '-':
-				currentVisualiser = 10;
 				break;
 				
 			case 'a':

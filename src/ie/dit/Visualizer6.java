@@ -16,8 +16,6 @@ public class Visualizer6
 	void animation(float speaker) 
 	{	
 		
-		int c;
-		
 		parent.stroke(0);
 		parent.fill(255);
 		
@@ -63,11 +61,11 @@ public class Visualizer6
 		parent.ellipse((parent.width/2 + parent.width/4)-40,parent.height/5,20,20);
 		
 		
-		parent.ellipse(parent.width/2,(parent.height/2)+100, 100 , 3 * speaker);
+		parent.ellipse(parent.width/2,(parent.height/2)+100, 100 ,  speaker);
 		
-		parent.ellipse(parent.width/4,(parent.height/4)+50, 50, 2 * speaker);
+		parent.ellipse(parent.width/4,(parent.height/4)+50, 50, speaker);
 		
-		parent.ellipse((parent.width/2 + parent.width/4),parent.height/4+50, 50, 2 * speaker);
+		parent.ellipse((parent.width/2 + parent.width/4),parent.height/4+50, 50, speaker);
 		
 	}
 	
